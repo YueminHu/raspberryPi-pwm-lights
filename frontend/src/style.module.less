@@ -1,0 +1,45 @@
+:global {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  }
+  #root {
+    width: 100%;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: scroll;
+  }
+  .fade-enter.main {
+    z-index: 1;
+    transform: translateX(-100%);
+  }
+  .fade-enter.fade-enter-active.main {
+    transform: none;
+    transition: transform 250ms ease-in;
+  } // */
+  .fade-exit.secondaryWrapper {
+    transition: transform 250ms ease-in;
+  }
+  .fade-exit.fade-exit-active.secondaryWrapper {
+    transform: translateX(20%);
+  }
+  .fade-enter.secondaryWrapper {
+    z-index: 1;
+    transform: translateX(100%);
+  }
+  .fade-enter.fade-enter-active.secondaryWrapper {
+    transform: none;
+    transition: transform 250ms ease-in;
+  } // */
+  .fade-exit.main {
+    z-index: 0;
+    transition: transform 250ms ease-in;
+  }
+  .fade-exit.fade-exit-active.main {
+    transform: translateX(-20%);
+  }
+}

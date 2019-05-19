@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      html {
+        background-color: #141414;
+      }
+      .imgWrapper {
+        position: relative;
+        margin: 20vw auto;
+        width: 80vw;
+      }
+      .img {
+        opacity: 0;
+        width: 100%;
+        border-radius: 2vw;
+        z-index: 0;
+        transition: all 0.5s ease;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .d {
+        opacity: 1;
+        z-index: 1;
+      }
+      .day {
+        box-shadow: 0 0 5vw white;
+      }
+      .night {
+        box-shadow: 0 0 5vw yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="imgWrapper">
+      <img src="./assets/house_day.jpg" class="img day" />
+      <img src="./assets/house_night.jpg" class="img night" />
+    </div>
+    <p class="wrapper"><button></button></p>
+    <script>
+      const wrapper = document.querySelector(".imgWrapper");
+      const dayHouse = document.querySelectorAll(".imgWrapper img")[0];
+      const nightHouse = document.querySelectorAll(".imgWrapper img")[1];
+      let litted = false;
+      function handleStatusSwitch(status) {
+        if (status) {
+          nightHouse.classList.add("d");
+          dayHouse.classList.remove("d");
+          litted = true;
+        } else {
+          dayHouse.classList.add("d");
+          nightHouse.classList.remove("d");
+        }
+      }
+      fetch("http://192.168.0.115:8890/api/status/12", {
+        // mode: "no-cors"
+      })
+        .then(res => res.json())
+        .then(res => {
+          handleStatusSwitch(res.status);
+          wrapper.addEventListener("click", () => {
+            fetch("http://192.168.0.115:8890/api/toggle/12", {
+              // mode: "no-cors"
+            })
+              .then(res => res.json())
+              .then(res => handleStatusSwitch(res.status));
+          });
+        });
+      // b;
+    </script>
+  </body>
+</html>
