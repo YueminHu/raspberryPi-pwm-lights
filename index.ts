@@ -38,6 +38,11 @@ app.get("/api/toggle/12", (req, res) => {
   res.json({ message: "success", status: litted });
 });
 
+function calInterval(min: number, max: number, cycleLength: number) {
+  const allSetDataCounts = ((max - min) / 5) * 2;
+  return min === max ? 16 : (cycleLength * 1000) / allSetDataCounts;
+}
+
 // set pwm
 class Pwm32 {
   pin: number = 32;
@@ -60,8 +65,8 @@ class Pwm32 {
     this.cycleLength = cycleLength;
     this.rpio = _rpio;
     this.direction = 1;
-    const allSetDataCounts = ((this.max - this.min) / 5) * 2;
-    this.interval = (this.cycleLength * 1000) / allSetDataCounts;
+    // const allSetDataCounts = ((this.max - this.min) / 5) * 2;
+    this.interval = calInterval(this.min, this.max, this.cycleLength);
   }
   init() {
     rpio.open(this.pin, rpio.PWM);
@@ -102,20 +107,19 @@ class Pwm32 {
     if (mode === "pwm") {
       this.min = min;
       this.max = max;
-      const allSetDataCounts = ((this.max - this.min) / 5) * 2;
-      this.interval = (cycleLength * 1000) / allSetDataCounts;
       this.pwmRunning = true;
     } else {
       this.min = this.max = max;
       this.pwmRunning = false;
     }
+    // const allSetDataCounts = ((this.max - this.min) / 5) * 2;
+    this.cycleLength = cycleLength;
+    this.interval = calInterval(this.min, this.max, this.cycleLength);
   }
   close() {
     this.rpio.close(this.pin);
     clearTimeout(this.pwmTimer);
     this.opened = false;
-    // this.current = this.min = this._min;
-    // this.max = this._max;
   }
 }
 
@@ -129,25 +133,14 @@ function getPwm32(_rpio: Rpio = rpio, pin: number = 32, min: number = 0, max: nu
 }
 
 app.post("/api/open/32", (req, res) => {
-  // const { mode, brightness } = req.body;
-  // if (mode === "pwm") {
-  //   getPwm32().init("pwm");
-  // } else {
-  //   getPwm32().init("lit", brightness);
-  // }
   getPwm32().init();
   const pinStatus = getPwm32().getStatus();
   res.json({ message: "success", ...pinStatus });
 });
 
-// app.get("/api/toggleMode/32", (req, res) => {
-//   getPwm32().toggleMode();
-//   const pinStatus = getPwm32().getStatus();
-//   res.json({ message: "success", ...pinStatus });
-// });
-
 app.post("/api/adjust/32", (req, res) => {
   const { mode, min, max, cycleLength } = req.body;
+  // console.log(cycleLength);
   getPwm32().changeStatus(mode, min, max, cycleLength);
   const pinStatus = getPwm32().getStatus();
   res.json({ message: "success", ...pinStatus });

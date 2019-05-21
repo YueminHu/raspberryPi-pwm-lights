@@ -29,7 +29,7 @@ class App extends React.PureComponent<RouteComponentProps, {}> {
     return (
       <div
         style={{
-          backgroundColor: "#F7F7F2",
+          // backgroundColor: "#F7F7F2",
           height: "100%"
         }}
       >
