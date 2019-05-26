@@ -17,42 +17,72 @@
     overflow-y: scroll;
   }
 
-  .fade-enter.main {
-    z-index: 1;
-    transform: translateX(-100%);
+  // .fade-enter.main {
+  //   z-index: 1;
+  //   transform: translateX(-100%);
+  // }
+
+  // .fade-enter.fade-enter-active.main {
+  //   transform: none;
+  //   transition: transform 250ms ease-in;
+  // }
+
+  // // */
+  // .fade-exit.secondaryWrapper {
+  //   transition: transform 250ms ease-in;
+  // }
+
+  // .fade-exit.fade-exit-active.secondaryWrapper {
+  //   transform: translateX(20%);
+  // }
+
+  // .fade-enter.secondaryWrapper {
+  //   z-index: 1;
+  //   transform: translateX(100%);
+  // }
+
+  // .fade-enter.fade-enter-active.secondaryWrapper {
+  //   transform: none;
+  //   transition: transform 250ms ease-in;
+  // }
+
+  // // */
+  // .fade-exit.main {
+  //   z-index: 0;
+  //   transition: transform 250ms ease-in;
+  // }
+
+  // .fade-exit.fade-exit-active.main {
+  //   transform: translateX(-20%);
+  // }
+  .form-item-wrapper {
+    display: flex;
+    margin: 4vw 0;
+    align-items: center;
+
+    >label {
+      width: 35%;
+    }
+
+    &.form-item-disabled {
+      >label {
+        color: #666;
+      }
+    }
   }
 
-  .fade-enter.fade-enter-active.main {
-    transform: none;
-    transition: transform 250ms ease-in;
+  input {
+    border: none;
+    outline: none;
+    font-size: 90%;
   }
 
-  // */
-  .fade-exit.secondaryWrapper {
-    transition: transform 250ms ease-in;
+  input[type="radio"] {
+    margin: 0;
   }
 
-  .fade-exit.fade-exit-active.secondaryWrapper {
-    transform: translateX(20%);
+  input:disabled {
+    background: #eee;
   }
 
-  .fade-enter.secondaryWrapper {
-    z-index: 1;
-    transform: translateX(100%);
-  }
-
-  .fade-enter.fade-enter-active.secondaryWrapper {
-    transform: none;
-    transition: transform 250ms ease-in;
-  }
-
-  // */
-  .fade-exit.main {
-    z-index: 0;
-    transition: transform 250ms ease-in;
-  }
-
-  .fade-exit.fade-exit-active.main {
-    transform: translateX(-20%);
-  }
 }
