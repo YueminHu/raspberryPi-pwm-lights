@@ -12,17 +12,16 @@ type State = {
   expandedPin: number;
 };
 
-const pins = [12, 32, 33, 35];
+const pins = [12, 33];
 
 export default class Home extends React.PureComponent<{}, State> {
   state: State = {
     expandedPin: null
   };
-  handlePanelExpand = (pin: number) => {
+  handlePanelExpand = (pin: number) =>
     this.setState({
       expandedPin: pin === this.state.expandedPin ? null : pin
     });
-  };
   render() {
     const { expandedPin } = this.state;
     return (
