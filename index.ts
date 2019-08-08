@@ -1,8 +1,9 @@
 import * as express from "express";
 import * as path from "path";
+import * as fallback from "express-history-api-fallback";
 
-import rpio = require("rpio");
-import cors from "cors";
+import * as rpio from "rpio";
+import * as cors from "cors";
 
 // import pwm from "./pwm";
 import PIN from "./pwm";
@@ -15,12 +16,6 @@ app.use(express.json());
 rpio.init({
   gpiomem: false
 });
-
-app.use(
-  express.static(path.join(__dirname, "./static"), {
-    extensions: ["html"]
-  })
-);
 
 let pinsCollection: {
   [key: number]: PIN;
@@ -73,5 +68,9 @@ app.post("/api/close/:pin", (req, res) => {
     .getStatus();
   res.json({ message: "success", ...pinStatus });
 });
+
+const root = path.join(__dirname, "./frontend/output");
+app.use(express.static(root));
+app.use(fallback("index.html", { root }));
 
 app.listen(8890);

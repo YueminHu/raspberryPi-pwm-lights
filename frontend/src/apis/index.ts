@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const base = axios.create({
-  baseURL: "http://192.168.0.115:8890"
+  baseURL: ""
 });
 
 export type PinStatus = {
